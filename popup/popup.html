@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Axure原型同步</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div id="toast" class="toast hidden" aria-live="polite"></div>
+    <div class="header">
+      <div class="brand-mark" aria-hidden="true">A</div>
+      <div>
+        <h1>Axure 原型同步</h1>
+        <p class="subtitle">发布原型，生成可分享链接</p>
+      </div>
+      <a href="#" id="settings-link" class="settings-trigger" aria-label="服务器设置" title="服务器设置">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.04.04a2 2 0 0 1-2.83 2.83l-.04-.04A1.7 1.7 0 0 0 15 19.37a1.7 1.7 0 0 0-1 .52V20a2 2 0 0 1-4 0v-.06a1.7 1.7 0 0 0-1-.52 1.7 1.7 0 0 0-1.88.34l-.04.04a2 2 0 1 1-2.83-2.83l.04-.04A1.7 1.7 0 0 0 4.63 15a1.7 1.7 0 0 0-.52-1H4a2 2 0 0 1 0-4h.06a1.7 1.7 0 0 0 .52-1 1.7 1.7 0 0 0-.34-1.88l-.04-.04a2 2 0 1 1 2.83-2.83l.04.04A1.7 1.7 0 0 0 9 4.63a1.7 1.7 0 0 0 1-.52V4a2 2 0 0 1 4 0v.06a1.7 1.7 0 0 0 1 .52 1.7 1.7 0 0 0 1.88-.34l.04-.04a2 2 0 1 1 2.83 2.83l-.04.04A1.7 1.7 0 0 0 19.37 9c.18.35.35.7.52 1H20a2 2 0 0 1 0 4h-.06a1.7 1.7 0 0 0-.52 1Z"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="content">
+      <!-- 项目列表区域 -->
+      <div class="project-section">
+        <div class="section-header">
+          <h3>项目管理</h3>
+          <button id="add-project-btn" class="btn-icon" type="button" aria-label="新建项目" title="新建项目">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div id="new-project-form" class="form-group hidden">
+          <div class="input-row">
+            <label class="sr-only" for="new-project-name">项目名称</label>
+            <input type="text" id="new-project-name" placeholder="项目名称">
+            <button id="save-project-btn" class="btn-small btn-primary" type="button">保存</button>
+            <button id="cancel-project-btn" class="btn-small btn-ghost" type="button" aria-label="取消新建项目" title="取消">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-stack">
+          <div class="project-row">
+            <div class="dropdown-panel">
+              <div class="select-card">
+                <span class="select-label">项目</span>
+                <div class="select-divider" aria-hidden="true"></div>
+                <button id="project-select-trigger" class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span id="project-select-value" class="select-value">暂无项目</span>
+                  <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 6 6 6-6 6"/>
+                  </svg>
+                </button>
+              </div>
+              <div id="project-dropdown" class="dropdown-menu hidden" role="listbox" aria-label="项目列表"></div>
+            </div>
+            <div class="project-actions">
+              <button id="share-project-btn" class="btn-icon" type="button" aria-label="分享项目链接" title="分享项目链接">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L11 4.93"/>
+                  <path d="M14 11a5 5 0 0 0-7.07 0L4.81 13.12a5 5 0 0 0 7.07 7.07L13 19.07"/>
+                </svg>
+              </button>
+              <button id="delete-project-btn" class="btn-icon" type="button" aria-label="删除项目" title="删除项目">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 7h16"/>
+                  <path d="M10 11v6M14 11v6"/>
+                  <path d="M6 7l1 14h10l1-14"/>
+                  <path d="M9 7V4h6v3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="status-panel" class="status-panel status-idle" aria-live="polite">
+            <div id="status-empty" class="status-empty">
+              <p class="status-title">等待同步</p>
+              <p class="status-copy">选择项目后开始同步</p>
+            </div>
+
+            <div id="progress-area" class="hidden">
+              <p id="progress-percent" class="progress-percent">0%</p>
+              <div class="progress-bar">
+                <div id="progress-fill"></div>
+              </div>
+              <p id="progress-text">就绪</p>
+            </div>
+
+            <div id="error-area" class="error-box hidden" role="alert">
+              <div class="error-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 8v5M12 17h.01"/>
+                  <path d="M10.3 4.4 2.8 17.3A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-2.7L13.7 4.4a2 2 0 0 0-3.4 0Z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="error-title">同步失败</p>
+                <p id="error-text" class="error-text"></p>
+              </div>
+            </div>
+
+            <div id="status-link-box" class="status-link-box hidden">
+              <button id="share-link" class="share-link-text" type="button" aria-live="polite"></button>
+              <button id="copy-btn" class="copy-text-btn" type="button">复制</button>
+            </div>
+          </div>
+
+          <p id="project-empty-state" class="inline-empty hidden">暂无项目，点击右上角新建</p>
+        </div>
+      </div>
+
+      <div class="upload-section">
+        <div class="button-group">
+          <button id="upload-btn" class="btn btn-primary" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>
+            </svg>
+            <span>同步并生成链接</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 设置弹窗 -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>服务器设置</h2>
+        <button id="close-settings-btn" class="btn-icon" type="button" aria-label="关闭设置" title="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="form-group">
+        <label for="server-url">服务器地址</label>
+        <input type="text" id="server-url" placeholder="http://192.168.0.31:2580">
+      </div>
+      <div class="form-group">
+        <label for="server-token">访问令牌 (Token)</label>
+        <input type="password" id="server-token" placeholder="your_secret_token">
+      </div>
+      <div class="form-group">
+        <label for="upload-concurrency">上传并发</label>
+        <input type="number" id="upload-concurrency" min="1" max="12" step="1" inputmode="numeric" placeholder="4">
+        <p class="field-hint">建议从 4 开始，网络稳定时可适当调高。</p>
+      </div>
+      <div class="btn-row">
+        <button id="save-settings-btn" class="btn btn-primary" type="button">保存设置</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

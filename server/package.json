@@ -1,0 +1,17 @@
+{
+  "name": "axure-upload-server",
+  "version": "1.0.0",
+  "description": "A simple Node.js server for uploading Axure prototype files.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.3.0",
+    "cors": "^2.8.5"
+  }
+}
