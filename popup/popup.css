@@ -40,11 +40,11 @@ body {
 html,
 body.is-embedded {
   width: 100%;
-  min-height: 100%;
 }
 
 body.is-embedded {
   overflow: auto;
+  background: transparent;
 }
 
 button,
@@ -72,16 +72,20 @@ svg {
 
 .container {
   position: relative;
-  padding: 18px 18px 14px;
+  padding: 24px;
 }
 
 body.is-embedded .container {
-  min-height: 100%;
+  min-height: auto;
   padding: 24px;
 }
 
 body.is-embedded .content {
-  min-height: calc(100vh - 48px);
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
 }
 
 .toast {
@@ -114,6 +118,12 @@ body.is-embedded .content {
   margin-bottom: 14px;
 }
 
+body.is-embedded .header {
+  gap: 14px;
+  margin-bottom: 12px;
+  padding-right: 0;
+}
+
 .brand-mark {
   display: grid;
   width: 38px;
@@ -128,6 +138,14 @@ body.is-embedded .content {
   font-weight: 750;
 }
 
+body.is-embedded .brand-mark {
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
 .header > div:nth-child(2) {
   min-width: 0;
   flex: 1;
@@ -140,10 +158,19 @@ body.is-embedded .content {
   line-height: 1.2;
 }
 
+body.is-embedded .header h1 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
 .subtitle {
   margin-top: 2px;
   color: var(--muted);
   font-size: 12px;
+}
+
+body.is-embedded .subtitle {
+  font-size: 11px;
 }
 
 .content {
@@ -160,8 +187,17 @@ body.is-embedded .content {
   padding: 16px;
 }
 
+body.is-embedded .project-section,
+body.is-embedded .upload-section {
+  padding: 0;
+}
+
 .project-section {
   border-bottom: 1px solid var(--line);
+}
+
+body.is-embedded .project-section {
+  border-bottom: 0;
 }
 
 .section-header {
@@ -170,6 +206,10 @@ body.is-embedded .content {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 12px;
+}
+
+body.is-embedded .section-header {
+  margin-bottom: 10px;
 }
 
 .section-header h3 {
@@ -183,12 +223,31 @@ body.is-embedded .content {
   gap: 14px;
 }
 
+body.is-embedded .control-stack {
+  gap: 10px;
+}
+
 .status-panel {
   min-height: 168px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fafaf8;
   padding: 12px;
+}
+
+body.is-embedded .status-panel {
+  height: 132px;
+  min-height: 132px;
+  border-radius: 14px;
+  background: #fbfbfa;
+}
+
+body.is-embedded .status-panel.status-idle {
+  height: 132px;
+}
+
+body.is-embedded .status-empty {
+  min-height: 100%;
 }
 
 .status-empty {
@@ -278,6 +337,10 @@ body.is-embedded .content {
   align-items: center;
 }
 
+body.is-embedded .project-row {
+  gap: 12px;
+}
+
 .dropdown-panel {
   position: relative;
 }
@@ -291,6 +354,11 @@ body.is-embedded .content {
   border-radius: 8px;
   background: var(--surface);
   transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+body.is-embedded .select-card {
+  min-height: 52px;
+  border-radius: 14px;
 }
 
 .select-card:focus-within {
@@ -369,6 +437,10 @@ body.is-embedded .content {
   background: var(--surface);
   box-shadow: 0 18px 28px rgba(17, 17, 17, 0.1);
   padding: 6px;
+}
+
+body.is-embedded .dropdown-menu {
+  border-radius: 14px;
 }
 
 .dropdown-option {
@@ -480,6 +552,14 @@ select:focus-visible {
   margin-top: 2px;
 }
 
+body.is-embedded .button-group {
+  margin-top: 10px;
+}
+
+body.is-embedded .upload-section {
+  padding-bottom: 0;
+}
+
 .btn,
 .btn-small,
 .btn-icon,
@@ -503,6 +583,11 @@ select:focus-visible {
   padding: 0 14px;
   font-size: 13px;
   font-weight: 700;
+}
+
+body.is-embedded .btn {
+  min-height: 44px;
+  border-radius: 14px;
 }
 
 .btn-primary {
@@ -569,6 +654,13 @@ select:focus-visible {
   border-color: var(--line);
   background: var(--surface);
   color: var(--text);
+}
+
+body.is-embedded .btn-icon,
+body.is-embedded .settings-trigger {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
 }
 
 .settings-trigger {
@@ -719,6 +811,11 @@ select:focus-visible {
   background: var(--surface);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
   padding: 16px;
+}
+
+body.is-embedded #settings-link {
+  position: static;
+  margin-left: auto;
 }
 
 #delete-project-btn:hover {

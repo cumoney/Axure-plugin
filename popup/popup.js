@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const isEmbedded = new URLSearchParams(window.location.search).get('embedded') === '1';
   document.body.classList.toggle('is-embedded', isEmbedded);
+
+  function reportEmbeddedSize() {
+    if (!isEmbedded || !window.parent || window.parent === window) return;
+    const height = Math.ceil(document.documentElement.scrollHeight);
+    window.parent.postMessage({ source: 'axure-sync-embed', type: 'resize', height }, '*');
+  }
+
   const toast = document.getElementById('toast');
   const projectSelectTrigger = document.getElementById('project-select-trigger');
   const projectSelectValue = document.getElementById('project-select-value');
@@ -43,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadSettings();
     await loadProjects();
     showIdleStatus();
+    reportEmbeddedSize();
   }
 
   async function loadSettings() {
@@ -295,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     newProjectForm.classList.add('hidden');
     newProjectName.value = '';
     renderProjectOptions();
+    reportEmbeddedSize();
   };
 
   saveSettingsBtn.onclick = async () => {
@@ -306,14 +315,19 @@ document.addEventListener('DOMContentLoaded', () => {
       uploadConcurrency
     });
     settingsModal.classList.add('hidden');
+    reportEmbeddedSize();
   };
 
   settingsLink.onclick = (e) => {
     e.preventDefault();
     settingsModal.classList.remove('hidden');
+    reportEmbeddedSize();
   };
 
-  closeSettingsBtn.onclick = () => settingsModal.classList.add('hidden');
+  closeSettingsBtn.onclick = () => {
+    settingsModal.classList.add('hidden');
+    reportEmbeddedSize();
+  };
 
   projectSelectTrigger.onclick = () => {
     if (dropdownOpen) {
@@ -423,8 +437,14 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(err);
     } finally {
       uploadBtn.disabled = false;
+      reportEmbeddedSize();
     }
   };
+
+  if (isEmbedded && typeof ResizeObserver !== 'undefined') {
+    const resizeObserver = new ResizeObserver(() => reportEmbeddedSize());
+    resizeObserver.observe(document.body);
+  }
 
   init();
 });

@@ -1,7 +1,7 @@
 (function() {
   const EMBED_ROOT_ID = 'axure-sync-embed-root';
   const EMBED_STYLE_ID = 'axure-sync-embed-style';
-  const EMBED_TOGGLE_ID = 'axure-sync-toggle';
+  const EMBED_TOOLBAR_ITEM_ID = 'axure-sync-toolbar-item';
   const EMBED_MODAL_ID = 'axure-sync-modal';
   const EMBED_IFRAME_ID = 'axure-sync-frame';
   const PAGE_URL = window.location.href;
@@ -34,48 +34,67 @@
         font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
 
-      #${EMBED_TOGGLE_ID} {
-        position: relative;
-        display: inline-flex;
+      li#${EMBED_TOOLBAR_ITEM_ID} {
+        list-style: none;
+        margin-right: 8px;
+        display: flex;
         align-items: center;
-        gap: 8px;
-        height: 32px;
-        padding: 0 12px;
-        border: 1px solid rgba(17, 17, 17, 0.14);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.96);
-        color: #111111;
-        box-shadow: 0 10px 24px rgba(17, 17, 17, 0.12);
+        justify-content: center;
+      }
+
+      li#${EMBED_TOOLBAR_ITEM_ID} > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+        min-height: 0;
+        padding: 0;
+        color: inherit;
+        text-decoration: none;
         cursor: pointer;
-        pointer-events: auto;
-        transition: background 160ms ease, border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+        border-radius: 0;
+        transition: opacity 140ms ease;
+        align-self: center;
       }
 
-      #${EMBED_ROOT_ID}.is-floating #${EMBED_TOGGLE_ID} {
-        position: fixed;
-        top: 20px;
-        right: 150px;
+      li#${EMBED_TOOLBAR_ITEM_ID} > a:hover {
+        opacity: 0.86;
       }
 
-      #${EMBED_TOGGLE_ID}:hover {
-        border-color: rgba(17, 17, 17, 0.24);
-        background: #ffffff;
-        transform: translateY(-1px);
+      li#${EMBED_TOOLBAR_ITEM_ID} .axure-sync-toolbar-label {
+        display: none;
       }
 
-      #${EMBED_TOGGLE_ID}:focus-visible,
+      li#${EMBED_TOOLBAR_ITEM_ID} .axure-sync-toolbar-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        line-height: 0;
+        flex: 0 0 24px;
+      }
+
+      li#${EMBED_TOOLBAR_ITEM_ID} .axure-sync-toolbar-icon svg {
+        display: block;
+        width: 24px;
+        height: 24px;
+        fill: currentColor;
+        stroke: none;
+      }
+
       #${EMBED_ROOT_ID} button:focus-visible {
         outline: none;
         box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.16);
       }
 
-      #${EMBED_TOGGLE_ID} svg,
       #${EMBED_ROOT_ID} svg {
         width: 16px;
         height: 16px;
         fill: none;
         stroke: currentColor;
-        stroke-width: 1.8;
+        stroke-width: 1.6;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
@@ -86,7 +105,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 24px;
+        padding: 32px;
         background: rgba(17, 17, 17, 0.28);
         backdrop-filter: blur(4px);
         opacity: 0;
@@ -101,52 +120,45 @@
 
       #${EMBED_MODAL_ID} .axure-sync-modal-card {
         position: relative;
-        width: min(860px, calc(100vw - 48px));
-        aspect-ratio: 4 / 3;
-        max-height: calc(100vh - 48px);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 28px 80px rgba(17, 17, 17, 0.24);
-        background: #f7f7f5;
+        width: min(530px, calc(100vw - 126px));
+        min-height: 0;
+        border: 1px solid rgba(17, 17, 17, 0.08);
+        border-radius: 18px;
+        overflow: visible;
+        box-shadow: 0 32px 96px rgba(17, 17, 17, 0.18);
+        background: #f6f5f2;
       }
 
       #${EMBED_MODAL_ID} .axure-sync-modal-close {
         position: absolute;
-        top: 12px;
-        right: 12px;
+        top: -12px;
+        right: -12px;
         z-index: 1;
-        width: 30px;
-        height: 30px;
-        border: 1px solid rgba(17, 17, 17, 0.12);
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(17, 17, 17, 0.08);
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.94);
         color: #111111;
         cursor: pointer;
+        box-shadow: 0 8px 20px rgba(17, 17, 17, 0.08);
       }
 
       #${EMBED_IFRAME_ID} {
         display: block;
         width: 100%;
-        height: 100%;
+        height: 360px;
         border: 0;
-        background: transparent;
+        border-radius: 16px;
+        background: #ffffff;
       }
-
-      @media (max-width: 900px) {
-        #${EMBED_ROOT_ID}.is-floating #${EMBED_TOGGLE_ID} {
-          right: 128px;
-        }
-      }
-
       @media (max-width: 720px) {
         #${EMBED_MODAL_ID} {
           padding: 12px;
         }
 
         #${EMBED_MODAL_ID} .axure-sync-modal-card {
-          width: min(100vw - 24px, 560px);
-          aspect-ratio: auto;
-          height: min(100vh - 24px, 720px);
+          width: min(100vw - 24px, 500px);
         }
       }
     `;
@@ -154,6 +166,9 @@
   }
 
   function findToolbarHost() {
+    const inspectHeader = document.getElementById('inspectControlFrameHeader');
+    if (inspectHeader) return inspectHeader;
+
     const preferredAnchors = Array.from(document.querySelectorAll('img, svg, span, div, a'))
       .filter(node => /axure/i.test((node.getAttribute('alt') || node.getAttribute('aria-label') || node.textContent || '').trim()))
       .map(node => node.closest('header, nav, [role="toolbar"], [class], [id]'))
@@ -180,21 +195,37 @@
     return candidates[0] || null;
   }
 
-  function mountToggle(root, toggle) {
+  function mountToggle(root, openModal) {
     const toolbarHost = findToolbarHost();
-    if (!toolbarHost) {
-      root.classList.add('is-floating');
-      document.documentElement.appendChild(root);
+    if (!toolbarHost) return;
+
+    document.documentElement.appendChild(root);
+    if (toolbarHost.id === 'inspectControlFrameHeader') {
+      let toolbarItem = document.getElementById(EMBED_TOOLBAR_ITEM_ID);
+      if (!toolbarItem) {
+        toolbarItem = document.createElement('li');
+        toolbarItem.id = EMBED_TOOLBAR_ITEM_ID;
+        toolbarItem.innerHTML = `
+          <a href="#" aria-label="上传原型" title="上传原型">
+            <span class="axure-sync-toolbar-icon" aria-hidden="true">
+              <svg viewBox="0 0 1024 1024">
+                <path d="M723.968 109.0048H310.272a196.3008 196.3008 0 0 0-196.1472 196.096v413.7472a196.352 196.352 0 0 0 196.1472 196.1472h413.696a196.352 196.352 0 0 0 196.1472-196.1472V305.1008a196.3008 196.3008 0 0 0-196.1472-196.096z m124.4672 609.8432a124.5696 124.5696 0 0 1-124.4672 124.4672H310.272a124.5696 124.5696 0 0 1-124.4672-124.4672V305.1008a124.5696 124.5696 0 0 1 124.4672-124.416h413.696a124.5696 124.5696 0 0 1 124.4672 124.416z"></path>
+                <path d="M650.24 291.84H394.24a35.84 35.84 0 0 0 0 71.68h256a35.84 35.84 0 1 0 0-71.68zM547.84 423.6288a35.84 35.84 0 0 0-25.6-10.9056 35.0208 35.0208 0 0 0-25.6 10.24l-128 126.1056a35.84 35.84 0 0 0 50.3808 51.2l66.56-65.9456v159.3856a35.84 35.84 0 0 0 71.68 0v-156.4672l60.2624 62.3616a35.84 35.84 0 0 0 51.5584-49.8176z"></path>
+              </svg>
+            </span>
+            <span class="axure-sync-toolbar-label">上传</span>
+          </a>
+        `;
+      }
+      const anchor = toolbarItem.querySelector('a');
+      anchor.onclick = (event) => {
+        event.preventDefault();
+        openModal();
+      };
+      const overflowBtn = toolbarHost.querySelector('#overflowBtn');
+      toolbarHost.insertBefore(toolbarItem, overflowBtn || null);
       return;
     }
-
-    root.classList.remove('is-floating');
-    document.documentElement.appendChild(root);
-
-    const hostChildren = Array.from(toolbarHost.children);
-    const axureBrand = hostChildren.find(child => /axure/i.test((child.textContent || child.getAttribute('aria-label') || '').trim()));
-    const insertBefore = axureBrand || null;
-    toolbarHost.insertBefore(toggle, insertBefore);
   }
 
   function createEmbeddedLauncher() {
@@ -205,12 +236,6 @@
     const root = document.createElement('div');
     root.id = EMBED_ROOT_ID;
     root.innerHTML = `
-      <button id="${EMBED_TOGGLE_ID}" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="${EMBED_MODAL_ID}">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>
-        </svg>
-        <span>上传</span>
-      </button>
       <div id="${EMBED_MODAL_ID}" role="dialog" aria-modal="true" aria-label="Axure 原型同步">
         <div class="axure-sync-modal-card">
           <button class="axure-sync-modal-close" type="button" aria-label="关闭">
@@ -226,24 +251,21 @@
         </div>
       </div>
     `;
-    const toggle = root.querySelector('#' + EMBED_TOGGLE_ID);
     const modal = root.querySelector('#' + EMBED_MODAL_ID);
     const closeBtn = root.querySelector('.axure-sync-modal-close');
-    mountToggle(root, toggle);
+    const iframe = root.querySelector('#' + EMBED_IFRAME_ID);
 
     function openModal() {
       modal.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
       document.documentElement.style.overflow = 'hidden';
     }
 
     function closeModal() {
       modal.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
       document.documentElement.style.overflow = '';
     }
 
-    toggle.addEventListener('click', openModal);
+    mountToggle(root, openModal);
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (event) => {
       if (event.target === modal) closeModal();
@@ -254,11 +276,17 @@
       }
     });
 
+    window.addEventListener('message', (event) => {
+      if (event.source !== iframe.contentWindow) return;
+      const data = event.data || {};
+      if (data.source !== 'axure-sync-embed' || data.type !== 'resize') return;
+      const nextHeight = Math.max(360, Math.min(Number(data.height) || 0, window.innerHeight - 110));
+      iframe.style.height = `${nextHeight}px`;
+    });
+
     const observer = new MutationObserver(() => {
-      if (root.classList.contains('is-floating')) {
-        mountToggle(root, toggle);
-      } else if (!toggle.isConnected || !document.contains(toggle)) {
-        mountToggle(root, toggle);
+      if (!document.getElementById(EMBED_TOOLBAR_ITEM_ID)) {
+        mountToggle(root, openModal);
       }
     });
     observer.observe(document.documentElement, { childList: true, subtree: true });
